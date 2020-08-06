@@ -1,0 +1,80 @@
+<!doctype html>
+<html  class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="__AD__/css/font.css">
+    <link rel="stylesheet" href="__AD__/css/login.css">
+    <link rel="stylesheet" href="__AD__/css/xadmin.css">
+    <script type="text/javascript" src="__AD__/js/jquery.min.js"></script>
+    <script src="__AD__/lib/layui/layui.js" charset="utf-8"></script>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="login-bg">
+
+<div class="login layui-anim layui-anim-up">
+    <div class="message">登录</div>
+    <div id="darkbannerwrap"></div>
+
+    <form method="post" class="layui-form"  >
+        <input name="username" id="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+        <hr class="hr15">
+        <input name="password" id="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+        <hr class="hr15">
+        <input name="code" id="code" lay-verify="required"  placeholder="验证码"  type="text" class="layui-input" style="width:50%;float: left;">
+        <img src="{:url('/code')}"  id="captcha" alt="验证码" onclick="resetCode();" style="width:40%;height:45px;float: left;margin-left: 5%;">
+        <hr class="hr15">
+        <input value="登录"  onclick="checkData();" style="width:100%;" type="button">
+        <hr class="hr20" >
+    </form>
+</div>
+
+<script>
+
+    // 提交表单数据
+    function checkData()
+    {
+        layui.use('form', function() {
+            $.ajax({
+                type: "POST",
+                url: "{:url('Login/check')}",
+                dataType:'json',
+                data: {
+                    'username':$('#username').val(),
+                    'password':$('#password').val(),
+                    'code':$('#code').val()
+                },
+                success: function(res){
+
+                    if (res.Status===1) {
+                        layer.msg(res.msg, {icon:6});
+                        window.location.href="{:url('Index/index')}";
+                    } else {
+                        layer.msg(res.msg, {icon:5});
+                        resetCode();
+                        // alert(res.msg);
+                    }
+                },
+                error:function(){
+                    resetCode();
+                }
+            });
+        });
+
+    }
+    // 重置验证码
+     function resetCode()
+     {
+         $('#captcha').attr('src','/code?rand='+Math.random());
+     }
+</script>
+<!-- 底部结束 -->
+</body>
+</html>
