@@ -91,7 +91,9 @@ class Member extends Controller
     /**
      * 添加页面
      */
-    public function add(){
+    public function add()
+    {
+        //echo get_ip_api();
         return $this->fetch();
     }
 }
