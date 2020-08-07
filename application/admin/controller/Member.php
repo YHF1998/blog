@@ -30,6 +30,7 @@ class Member extends Controller
     public function create()
     {
         //
+        return $this->fetch();
     }
 
     /**
@@ -41,6 +42,7 @@ class Member extends Controller
     public function save(Request $request)
     {
         //
+        dump($request);
     }
 
     /**
@@ -88,12 +90,4 @@ class Member extends Controller
         //
     }
 
-    /**
-     * 添加页面
-     */
-    public function add()
-    {
-        //echo get_ip_api();
-        return $this->fetch();
-    }
 }
