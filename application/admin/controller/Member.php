@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Request;
 
-class Member extends Controller
+class Member extends Base
 {
     /**
      * 显示资源列表
@@ -42,7 +42,24 @@ class Member extends Controller
     public function save(Request $request)
     {
         //
-        dump($request);
+
+        $params = $request->post();
+        //dump($params);
+        //exit;
+        $res = $this->validate($params, [
+            'email|邮箱'     => ['require', 'email', 'unique:member'],
+            'nick_name|昵称' => ['require', 'between' => '4,50'],
+            'phone|手机号'    => ['require', 'mobile'],
+            'password|密码'  => ['require', 'regex' => '/^[0-9a-z_$]{6,16}$/i'],
+            'sex|性别'       => 'require'
+        ]);
+        //dump($res);
+        if (true !== $res) {
+            $this->fail($res);
+            //eixt;
+            //dump($res);
+        }
+
     }
 
     /**

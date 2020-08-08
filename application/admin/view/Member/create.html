@@ -41,6 +41,13 @@
                            autocomplete="off" class="layui-input"></div>
             </div>
             <div class="layui-form-item">
+                <label for="L_phone" class="layui-form-label">
+                    <span class="x-red">*</span>手机号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_phone" name="phone" required="" lay-verify="nikename"
+                           autocomplete="off" class="layui-input"></div>
+            </div>
+            <div class="layui-form-item">
                 <label for="L_pass" class="layui-form-label">
                     <span class="x-red">*</span>密码</label>
                 <div class="layui-input-inline">
@@ -79,7 +86,7 @@
     //form.render(type);
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
-        var layer = layui.layer;
+        //var layer = layui.layer;
 
         //监听提交
         //form.on('submit(add)', function (data) {
@@ -91,6 +98,7 @@
     function subDate() {
         var email = $('#L_email').val();
         var nick_name = $('#L_username').val();
+        var phone = $('#L_phone').val();
         var password = $('#L_pass').val();
         var repassword = $('#L_repass').val();
         var sex = $("input[name='sex']:checked").val();
@@ -105,31 +113,25 @@
         $.ajax({
             url: '{:url(\'/member\')}',
             type: 'POST',
+            dataType: 'json',
             data: {
                 'email': email,
                 'nick_name': nick_name,
+                'phone': phone,
                 'password': password,
                 'sex': sex
             },
-            success: function (res) {
-                if (res.code === 200) {
-                    layui.use('layer', function () {
-                        var layer = layui.layer;
-                        layer.msg(res.msg, {icon: 6, time: 500});
-                    });
+            success: function (data) {
+                if (data.code === 200) {
+                    layer.msg(data.msg, {icon: 6});
                 } else {
-                    layui.use('layer', function () {
-                        var layer = layui.layer;
-                        layer.msg(res.msg, {icon: 5, time: 1000});
-                    });
-                    return false;
+
+                    layer.msg(data.msg, {icon: 5});
+
                 }
             },
             error: function () {
-                layui.use('layer', function () {
-                    var layer = layui.layer;
-                    layer.msg('操作失败,请重试', {icon: 5, time: 1000});
-                });
+                layer.msg('操作失败,请重试', {icon: 5, time: 1000});
                 return false;
             }
         });
