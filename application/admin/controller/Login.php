@@ -11,7 +11,7 @@ use think\Controller;
 use think\Request;
 use think\captcha\Captcha;
 use think\facade\Session;
-use app\admin\model\User as UserModel;
+use app\common\model\User as UserModel;
 
 class Login extends Controller
 {
