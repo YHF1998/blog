@@ -48,17 +48,23 @@ class Member extends Base
         //exit;
         $res = $this->validate($params, [
             'email|邮箱'     => ['require', 'email', 'unique:member'],
-            'nick_name|昵称' => ['require', 'between' => '4,50'],
+            'nick_name|昵称' => ['require', 'max' => '100'],
             'phone|手机号'    => ['require', 'mobile'],
             'password|密码'  => ['require', 'regex' => '/^[0-9a-z_$]{6,16}$/i'],
             'sex|性别'       => 'require'
         ]);
-        //dump($res);
+        //验证失败
         if (true !== $res) {
             $this->fail($res);
-            //eixt;
-            //dump($res);
         }
+
+        //验证成功
+        $params['password'] = enctype_password($params['password']);
+        //新增数据
+        $info = \app\common\model\Member::create($params);
+        //返回新增数据
+        $this->ok($info, 200, '新增成功');
+
 
     }
 
