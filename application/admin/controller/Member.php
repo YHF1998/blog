@@ -15,7 +15,8 @@ class Member extends Base
     public function index()
     {
         //获取会员列表数据信息
-        $list = \app\common\model\Member::where('is_disable', 0)->paginate(2);
+        //$list = \app\common\model\Member::where('is_disable', 0)->paginate(2);
+        $list = \app\common\model\Member::paginate(2);
         //赋值
         $this->assign('lists', $list);
         //返回
@@ -99,7 +100,16 @@ class Member extends Base
      */
     public function update(Request $request, $id)
     {
-        //
+        $params = $request->param();
+        //判断类型
+        if ($params['type'] == 'repass') {
+            //更新密码
+            $params['password'] = enctype_password($params['password']);
+        }
+
+
+        $info = \app\common\model\Member::update($params);
+        $this->ok($info);
     }
 
     /**
@@ -111,6 +121,15 @@ class Member extends Base
     public function delete($id)
     {
         //
+    }
+
+    //查看修改密码页面
+    public function password($id)
+    {
+
+        $info = \app\common\model\Member::get($id);
+        $this->assign('info', $info);
+        return $this->fetch();
     }
 
 }
