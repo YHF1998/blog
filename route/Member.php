@@ -1,7 +1,10 @@
 <?php
 /**
- *Create By : Ye Haofeng
+ *Create By : Ye
  *Date : 2020/8/6
  *Time : 21:58
  **/
+
+use think\facade\Route;
+
 Route::resource('member', 'admin/Member');

@@ -8,8 +8,9 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+use think\facade\Route;
 
-//Route::get('hello/:name', 'index/hello');
+Route::get('hello/:name', 'index/hello');
 
 return [
 
