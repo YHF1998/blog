@@ -8,7 +8,7 @@ use think\Request;
 class Member extends Base
 {
     /**
-     * 显示资源列表
+     * 显示资源列表---
      *
      * @return \think\Response
      */
