@@ -14,7 +14,9 @@ class Index extends Base
     {
         //dump(Env::get('root_path'));
         //exit;
+		return '我改改改';
         return $this->fetch();
+        
         //return Test::test('xxxx');
     }
 
